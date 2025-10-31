@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shivam Singha - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2d2d2d;
+            --primary-foreground: #ffffff;
+            --secondary: #f5f5f5;
+            --muted: #f5f5f5;
+            --muted-foreground: #6b7280;
+            --border: #e5e7eb;
+            --foreground: #1f2937;
+            --background: #ffffff;
+            --card: #ffffff;
+            --accent: #f3f4f6;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+            background-attachment: fixed;
+            color: var(--foreground);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .nav-logo {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--foreground);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .nav-logo:hover {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: none;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--muted-foreground);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--foreground);
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--primary-foreground);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        .mobile-menu-btn {
+            display: block;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu {
+            display: none;
+            padding: 1rem 0;
+            border-top: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--muted-foreground);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--foreground);
+            background: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 56rem;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .profile-image {
+            width: 10rem;
+            height: 10rem;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            margin: 0 auto 2rem;
+            animation: fadeInScale 0.6s ease-out 0.1s both;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, var(--primary), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h2 {
+            font-size: clamp(1.25rem, 3vw, 1.875rem);
+            color: var(--muted-foreground);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            color: var(--muted-foreground);
+            max-width: 48rem;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            animation: fadeInUp 0.6s ease-out 0.5s both;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 1rem;
+        }
+
+        .section-bg {
+            background: rgba(245, 245, 245, 0.3);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: clamp(1.875rem, 4vw, 3rem);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            font-size: 1.125rem;
+            color: var(--muted-foreground);
+            max-width: 42rem;
+            margin: 0 auto;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            max-width: 72rem;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            animation: fadeInUp 0.5s ease-out both;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #000;
+        }
+
+        .card-description {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .card-content {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        /* Badges */
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .badge {
+            padding: 0.25rem 0.75rem;
+            background: var(--secondary);
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Project Cards */
+        .project-image {
+            width: 100%;
+            height: 12rem;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        .contact-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 1rem;
+            align-items: start;
+        }
+
+        .social-links {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            text-decoration: none;
+            color: var(--foreground);
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border);
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive */
+        @media (min-width: 640px) {
+            .hero-buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .profile-image {
+                width: 12rem;
+                height: 12rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: none;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .profile-image {
+                width: 14rem;
+                height: 14rem;
+            }
+        }
+
+        /* Icons */
+        .icon {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .list-dot {
+            width: 0.375rem;
+            height: 0.375rem;
+            background: var(--primary);
+            border-radius: 50%;
+            margin-top: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .achievement-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">Portfolio</a>
+            
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#projects">Projects</a>
+                <a href="#skills">Skills</a>
+                <a href="#education">Education</a>
+                <a href="#contact">Contact</a>
+                <button class="btn btn-primary" onclick="window.location.href='mailto:shivamsingha001@gmail.com'">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    Hire Me
+                </button>
+            </div>
+            
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <svg class="icon" style="width: 1.5rem; height: 1.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    <path id="close-icon" style="display: none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="#home" onclick="toggleMobileMenu()">Home</a>
+            <a href="#projects" onclick="toggleMobileMenu()">Projects</a>
+            <a href="#skills" onclick="toggleMobileMenu()">Skills</a>
+            <a href="#education" onclick="toggleMobileMenu()">Education</a>
+            <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
+            <div style="padding: 0.5rem 1.5rem;">
+                <button class="btn btn-primary" style="width: 100%;" onclick="window.location.href='mailto:shivamsingha001@gmail.com'">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    Hire Me
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="profile-image">
+                <img src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/WhatsApp-Image-2025-07-01-at-00.27.00_541ac49c-1761924477907.jpg?width=8000&height=8000&resize=contain" alt="Profile Photo">
+            </div>
+            
+            <h1>Hi, I'm <span class="gradient-text">Shivam Singha</span></h1>
+            
+            <h2>4th Year Computer Science Student</h2>
+            
+            <p>A motivated and detail-oriented Computer Science student with a strong foundation in programming, data structures, algorithms, machine learning and frontend web development. Experienced in building projects using technologies like Python, Machine Learning, JavaScript and APIs. Passionate about learning emerging technologies such as AI and cloud computing, with a keen interest in solving real-world problems through innovative solutions.</p>
+            
+            <div class="hero-buttons">
+                <button class="btn btn-primary" style="padding: 0.75rem 1.5rem; font-size: 1rem;" onclick="window.location.href='mailto:shivamsingha001@gmail.com'">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    Hire Me
+                </button>
+                <button class="btn" style="padding: 0.75rem 1.5rem; font-size: 1rem; background: white; color: var(--foreground);" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                    </svg>
+                    Contact
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="section-bg reveal">
+        <div class="container">
+            <div class="section-title">
+                <h2>Education</h2>
+                <p>My academic journey and qualifications</p>
+            </div>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: rgba(168, 85, 247, 0.1);">
+                            <svg style="width: 1.5rem; height: 1.5rem; color: #a855f7;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"/>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="card-title">Meghnad Saha Institute of Technology</div>
+                            <div class="card-description">B.Tech in Computer Science and Engineering</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            <span>2022-2026</span>
+                        </div>
+                        <div style="font-weight: 600; color: var(--primary);">CGPA: 7.06 (till 6th sem)</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: rgba(59, 130, 246, 0.1);">
+                            <svg style="width: 1.5rem; height: 1.5rem; color: #3b82f6;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"/>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="card-title">Sainthia Town High School</div>
+                            <div class="card-description">Higher Secondary Education</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            <span>2022</span>
+                        </div>
+                        <div style="font-weight: 600; color: var(--primary);">91.2%</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: rgba(16, 185, 129, 0.1);">
+                            <svg style="width: 1.5rem; height: 1.5rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"/>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="card-title">Sainthia Town High School</div>
+                            <div class="card-description">Secondary Education</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            <span>2020</span>
+                        </div>
+                        <div style="font-weight: 600; color: var(--primary);">89.6%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="reveal">
+        <div class="container">
+            <div class="section-title">
+                <h2>Technical Skills</h2>
+                <p>My technical expertise and competencies</p>
+            </div>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: rgba(59, 130, 246, 0.1);">
+                            <svg style="width: 1.25rem; height: 1.25rem; color: #3b82f6;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                            </svg>
+                        </div>
+                        <div class="card-title">Languages</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="badge-container">
+                            <span class="badge">Java</span>
+                            <span class="badge">SQL</span>
+                            <span class="badge">NoSQL</span>
+                            <span class="badge">C</span>
+                            <span class="badge">Python</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: rgba(168, 85, 247, 0.1);">
+                            <svg style="width: 1.25rem; height: 1.25rem; color: #a855f7;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                            </svg>
+                        </div>
+                        <div class="card-title">Frontend</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="badge-container">
+                            <span class="badge">HTML</span>
+                            <span class="badge">CSS</span>
+                            <span class="badge">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: rgba(16, 185, 129, 0.1);">
+                            <svg style="width: 1.25rem; height: 1.25rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/>
+                            </svg>
+                        </div>
+                        <div class="card-title">Backend & Libraries</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="badge-container">
+                            <span class="badge">Node.js</span>
+                            <span class="badge">NumPy</span>
+                            <span class="badge">Pandas</span>
+                            <span class="badge">Matplotlib</span>
+                            <span class="badge">Seaborn</span>
+                            <span class="badge">TensorFlow</span>
+                            <span class="badge">PyTorch</span>
+                            <span class="badge">Scikit-learn</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: rgba(249, 115, 22, 0.1);">
+                            <svg style="width: 1.25rem; height: 1.25rem; color: #f97316;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/>
+                            </svg>
+                        </div>
+                        <div class="card-title">Databases & Cloud</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="badge-container">
+                            <span class="badge">MySQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: rgba(6, 182, 212, 0.1);">
+                            <svg style="width: 1.25rem; height: 1.25rem; color: #06b6d4;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/>
+                            </svg>
+                        </div>
+                        <div class="card-title">API & Architecture</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="badge-container">
+                            <span class="badge">REST API</span>
+                            <span class="badge">Clean Architecture</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: rgba(239, 68, 68, 0.1);">
+                            <svg style="width: 1.25rem; height: 1.25rem; color: #ef4444;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                            </svg>
+                        </div>
+                        <div class="card-title">Tools</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="badge-container">
+                            <span class="badge">Git</span>
+                            <span class="badge">GitHub Actions</span>
+                            <span class="badge">VS Code</span>
+                            <span class="badge">Tableau</span>
+                            <span class="badge">Jupyter Notebook</span>
+                            <span class="badge">GenAI</span>
+                            <span class="badge">MS Office</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: rgba(236, 72, 153, 0.1);">
+                            <svg style="width: 1.25rem; height: 1.25rem; color: #ec4899;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                        </div>
+                        <div class="card-title">Coursework</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="badge-container">
+                            <span class="badge">Computer Architecture</span>
+                            <span class="badge">Computer Network</span>
+                            <span class="badge">DBMS</span>
+                            <span class="badge">OOPS</span>
+                            <span class="badge">Data Structures</span>
+                            <span class="badge">Operating System</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section-bg reveal">
+        <div class="container">
+            <div class="section-title">
+                <h2>Featured Projects</h2>
+                <p>Here are some of my recent projects and contributions</p>
+            </div>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=500&fit=crop" alt="E-Commerce Testing" class="project-image">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: rgba(16, 185, 129, 0.1);">
+                            <svg style="width: 1.25rem; height: 1.25rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="card-title">E-Commerce Website Testing</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-description" style="margin-bottom: 1rem;">
+                            Tested key modules like login, product search, and checkout for functionality and usability. Created and executed manual test cases, reported bugs using Jira. Automated regression tests using Cypress and validated APIs with Postman.
+                        </div>
+                        <div class="badge-container">
+                            <span class="badge">Cypress</span>
+                            <span class="badge">Jira</span>
+                            <span class="badge">Postman</span>
+                            <span class="badge">Manual Testing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1592210454359-9043f067919b?w=800&h=500&fit=crop" alt="Weather Website" class="project-image">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: rgba(59, 130, 246, 0.1);">
+                            <svg style="width: 1.25rem; height: 1.25rem; color: #3b82f6;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="card-title">Weather Forecasting Website</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-description" style="margin-bottom: 1rem;">
+                            A Weather Forecasting Website allows users to get real-time weather updates for any location around the world. Built using HTML, CSS, and JavaScript, it leverages an API to fetch live weather data.
+                        </div>
+                        <div class="badge-container">
+                            <span class="badge">HTML</span>
+                            <span class="badge">CSS</span>
+                            <span class="badge">JavaScript</span>
+                            <span class="badge">REST API</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop" alt="Data Analysis" class="project-image">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: rgba(168, 85, 247, 0.1);">
+                            <svg style="width: 1.25rem; height: 1.25rem; color: #a855f7;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="card-title">Exploratory Data Analysis</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-description" style="margin-bottom: 1rem;">
+                            Performed data cleaning, visualization, and exploratory data analysis on U.S. homelessness statistics using Python. Utilized Pandas, Matplotlib, and Seaborn to uncover regional trends and generate insightful visual summaries.
+                        </div>
+                        <div class="badge-container">
+                            <span class="badge">Python</span>
+                            <span class="badge">Pandas</span>
+                            <span class="badge">Seaborn</span>
+                            <span class="badge">Matplotlib</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="reveal">
+        <div class="container">
+            <div class="section-title">
+                <h2>Certifications & More</h2>
+                <p>My certifications, achievements, and interests</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 72rem; margin: 0 auto;">
+                <div style="display: grid; grid-template-columns: 1fr; lg:grid-template-columns: 2fr 1fr; gap: 1.5rem;">
+                    <!-- Certifications -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: rgba(249, 115, 22, 0.1);">
+                                <svg style="width: 1.5rem; height: 1.5rem; color: #f97316;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                                </svg>
+                            </div>
+                            <div class="card-title" style="font-size: 1.25rem;">Certifications</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="list-item">
+                                <div class="list-dot"></div>
+                                <span>300+ Python Exercises (Simple, Intermediate & Complex) by Udemy</span>
+                            </div>
+                            <div class="list-item">
+                                <div class="list-dot"></div>
+                                <span>Data Structure and Algorithm by Amazon</span>
+                            </div>
+                            <div class="list-item">
+                                <div class="list-dot"></div>
+                                <span>GenAI Powered Data Analytics Job Simulation by TATA</span>
+                            </div>
+                            <div class="list-item">
+                                <div class="list-dot"></div>
+                                <span>Data Analytics Job Simulation by Deloitte</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hobbies -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: rgba(236, 72, 153, 0.1);">
+                                <svg style="width: 1.5rem; height: 1.5rem; color: #ec4899;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div class="card-title" style="font-size: 1.25rem;">Hobbies</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="list-item">
+                                <div class="list-dot"></div>
+                                <span>Playing and Watching Cricket</span>
+                            </div>
+                            <div class="list-item">
+                                <div class="list-dot"></div>
+                                <span>Watching Movies and Web Series</span>
+                            </div>
+                            <div class="list-item">
+                                <div class="list-dot"></div>
+                                <span>Playing Chess</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Achievements -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: rgba(168, 85, 247, 0.1);">
+                            <svg style="width: 1.5rem; height: 1.5rem; color: #a855f7;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/>
+                            </svg>
+                        </div>
+                        <div class="card-title" style="font-size: 1.25rem;">Achievements</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="achievement-grid">
+                            <div class="achievement-item" style="background: rgba(59, 130, 246, 0.1);">
+                                <svg style="width: 1.25rem; height: 1.25rem; color: #3b82f6; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                                </svg>
+                                <span style="font-size: 0.875rem;">Solved 50+ DSA Questions on Leetcode</span>
+                            </div>
+                            <div class="achievement-item" style="background: rgba(234, 179, 8, 0.1);">
+                                <svg style="width: 1.25rem; height: 1.25rem; color: #eab308; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/>
+                                </svg>
+                                <span style="font-size: 0.875rem;">Participated in SIH'24</span>
+                            </div>
+                            <div class="achievement-item" style="background: rgba(16, 185, 129, 0.1);">
+                                <svg style="width: 1.25rem; height: 1.25rem; color: #10b981; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                </svg>
+                                <span style="font-size: 0.875rem;">Participated and Organised Hackfest'25</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="reveal">
+        <div class="container" style="max-width: 56rem;">
+            <div class="section-title">
+                <h2>Get In Touch</h2>
+                <p>I'm always open to discussing new projects, opportunities, or collaborations. Feel free to reach out!</p>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-grid">
+                    <!-- Contact Info -->
+                    <div style="space-y: 1.5rem;">
+                        <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1.5rem;">Contact Information</h3>
+                        
+                        <div class="contact-item">
+                            <div class="card-icon" style="background: rgba(239, 68, 68, 0.1);">
+                                <svg style="width: 1.25rem; height: 1.25rem; color: #ef4444;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <p style="font-weight: 500; margin-bottom: 0.25rem;">Email</p>
+                                <a href="mailto:shivamsingha001@gmail.com" style="color: var(--muted-foreground); text-decoration: none;">shivamsingha001@gmail.com</a>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="card-icon" style="background: rgba(16, 185, 129, 0.1);">
+                                <svg style="width: 1.25rem; height: 1.25rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <p style="font-weight: 500; margin-bottom: 0.25rem;">Phone</p>
+                                <p style="color: var(--muted-foreground);">+91 9476357303</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="card-icon" style="background: rgba(249, 115, 22, 0.1);">
+                                <svg style="width: 1.25rem; height: 1.25rem; color: #f97316;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <p style="font-weight: 500; margin-bottom: 0.25rem;">Location</p>
+                                <p style="color: var(--muted-foreground);">West Bengal, India</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Connect -->
+                    <div>
+                        <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1.5rem;">Connect With Me</h3>
+                        
+                        <div class="social-links">
+                            <a href="mailto:shivamsingha001@gmail.com" class="social-link" style="background: rgba(239, 68, 68, 0.1);">
+                                <svg style="width: 1.5rem; height: 1.5rem; color: #ef4444;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                <span style="font-size: 0.75rem; font-weight: 500;">Email</span>
+                            </a>
+
+                            <a href="https://www.linkedin.com/in/shivam-singha-roni-289787226/" target="_blank" class="social-link" style="background: rgba(59, 130, 246, 0.1);">
+                                <svg style="width: 1.5rem; height: 1.5rem; color: #3b82f6;" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                </svg>
+                                <span style="font-size: 0.75rem; font-weight: 500;">LinkedIn</span>
+                            </a>
+
+                            <a href="https://github.com/Shivamsingha001" target="_blank" class="social-link" style="background: rgba(168, 85, 247, 0.1);">
+                                <svg style="width: 1.5rem; height: 1.5rem; color: #a855f7;" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                </svg>
+                                <span style="font-size: 0.75rem; font-weight: 500;">GitHub</span>
+                            </a>
+                        </div>
+
+                        <button class="btn btn-primary" style="width: 100%; margin-bottom: 1rem; padding: 0.75rem 1rem;" onclick="window.location.href='mailto:shivamsingha001@gmail.com'">
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            Send Email
+                        </button>
+
+                        <button class="btn" style="width: 100%; background: white; color: var(--foreground); border: 1px solid var(--border); padding: 0.75rem 1rem;" onclick="alert('Resume download feature - Add your resume link here')">
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            Download Resume
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <footer>
+                <p>© <span id="year"></span> Computer Science Student. Built with HTML, CSS & JavaScript.</p>
+            </footer>
+        </div>
+    </section>
+
+    <script>
+        // Set current year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+            
+            mobileMenu.classList.toggle('active');
+            
+            if (mobileMenu.classList.contains('active')) {
+                menuIcon.style.display = 'none';
+                closeIcon.style.display = 'block';
+            } else {
+                menuIcon.style.display = 'block';
+                closeIcon.style.display = 'none';
+            }
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all reveal elements
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add stagger animation to cards
+        document.querySelectorAll('.card-grid').forEach(grid => {
+            const cards = grid.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>
